@@ -1,12 +1,12 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from api_key import Keys
-import datetime
 
 
 class GSheet():
 
     LAST_SEEN_RANGE = 'history!A2'
+    TWEETS_LOG_RANGE = 'logs!A1:B1'
 
     def __init__(self):
         scope = ['https://www.googleapis.com/auth/spreadsheets',
