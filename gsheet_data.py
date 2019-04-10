@@ -41,12 +41,14 @@ class GSheet():
             print(err)
 
     def log_mention(self, mention):
+        # TODO: may need to move robot name to a better place not hardcoded.
+        robot_name = '@darka_bot '
         value_input_option = 'RAW'
         insert_data_option = 'OVERWRITE'
         value_range_body = {
             "range": self.TWEETS_LOG_RANGE,
             "majorDimension": "ROWS",
-            "values": [[mention.user.screen_name, mention.text]]
+            "values": [[mention.user.screen_name, mention.text.replace(robot_name, '')]]
         }
         request = self.sheet.values().append(
             spreadsheetId=Keys.SPREADSHEET_ID, range=self.TWEETS_LOG_RANGE,
