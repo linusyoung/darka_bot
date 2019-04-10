@@ -7,7 +7,7 @@ from api_key import Keys
 class GSheet():
 
     LAST_SEEN_RANGE = 'history!A2'
-    TWEETS_LOG_RANGE = 'log!A1:B1'
+    TWEETS_LOG_RANGE = 'logs!A1:B1'
 
     def __init__(self):
         scope = ['https://www.googleapis.com/auth/spreadsheets',
@@ -46,7 +46,7 @@ class GSheet():
         value_range_body = {
             "range": self.TWEETS_LOG_RANGE,
             "majorDimension": "ROWS",
-            "values": [[mention.id, mention.text]]
+            "values": [[mention.user.screen_name, mention.text]]
         }
         request = self.sheet.values().append(
             spreadsheetId=Keys.SPREADSHEET_ID, range=self.TWEETS_LOG_RANGE,

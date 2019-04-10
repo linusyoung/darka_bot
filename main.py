@@ -16,11 +16,7 @@ def main():
 
     for mention in reversed(mentions):
         wks.log_mention(mention)
-        print(mention.user.screen_name + ': ' + mention.text)
-        # wks.update_last_seen_id(mention.id_str)
-        # api.update_status('@' + test_mention.user.screen_name +
-        #                   ' Roger that!', test_mention.id)
-        break
+        wks.update_last_seen_id(mention.id_str)
 
 
 if __name__ == "__main__":
