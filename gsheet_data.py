@@ -2,6 +2,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient import errors
 from api_key import Keys
+from robot import Robot
 
 
 class GSheet():
@@ -41,14 +42,21 @@ class GSheet():
             print(err)
 
     def log_mention(self, mention):
-        # TODO: may need to move robot name to a better place not hardcoded.
-        robot_name = '@darka_bot '
+        robot = Robot()
+        hashtags = mention.entities.get('hashtags')
+        for hashtag in hashtags:
+            action = {
+                'cmd': hashtag.get('text'),
+                'arg': mention.text[hashtag.get('indices')[1] + 1:]
+            }
+            robot.actions.append(action)
+        robot.clean_up_actions()
         value_input_option = 'RAW'
         insert_data_option = 'OVERWRITE'
         value_range_body = {
             "range": self.TWEETS_LOG_RANGE,
             "majorDimension": "ROWS",
-            "values": [[mention.user.screen_name, mention.text.replace(robot_name, '')]]
+            "values": [[mention.user.screen_name, mention.text.replace(robot.robot_name, '')]]
         }
         request = self.sheet.values().append(
             spreadsheetId=Keys.SPREADSHEET_ID, range=self.TWEETS_LOG_RANGE,
