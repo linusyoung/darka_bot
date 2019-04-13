@@ -10,11 +10,12 @@ class Robot():
         'help'
     ]
 
-    def __init__(self):
+    def __init__(self, api):
         # action is a list of tag values.
         self.actions = []
         # TODO: may need to move robot name to a better place not hardcoded.
         self.robot_name = '@darka_bot '
+        self.api = api
 
     def clean_up_actions(self):
         self.actions.reverse()
@@ -24,12 +25,14 @@ class Robot():
                 o_actions[i].get('cmd'), o_actions[i].get('arg')), '').strip()})
          for i in range(len(self.actions) - 1)]
 
-    def take_action(self, action, gsheet, user):
+    def take_action(self, action, gsheet, api, user):
         cmd = action.get('cmd').lower()
         if cmd == "help":
             res_text = self.print_help()
         elif cmd == "signup":
             res_text = self.signup(gsheet, user)
+        elif cmd == "follow":
+            res_text = self.follow(api, action)
         else:
             pass
             # gsheet.signup_user(user.screen_name)
@@ -45,3 +48,8 @@ class Robot():
         else:
             gsheet.signup_user(user.screen_name)
             return "you're all set."
+
+    def follow(self, api, action):
+        to_follow = action.get('arg')
+        api.create_friendship(to_follow)
+        return "follow {}".format(to_follow)

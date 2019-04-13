@@ -30,13 +30,19 @@ class GSheet():
         except errors.Error as err:
             print(err)
 
-    def log_mention(self, mention):
-        robot = Robot()
-        hashtags = mention.entities.get('hashtags')
-        for hashtag in hashtags:
+    def log_mention(self, mention, api):
+        robot = Robot(api)
+        # TODO: remove test mention objects
+        # mention_text: @darka_bot #follow HenjiYang
+        tags = [{'text': 'follow', 'indices': [11, 17]}]
+
+        mention.text = "@darka_bot #follow HenjiYang"
+        # hashtags = mention.entities.get('hashtags')
+        for hashtag in tags:
+            # for hashtag in hashtags:
             action = {
                 'cmd': hashtag.get('text'),
-                'arg': mention.text[hashtag.get('indices')[1] + 1:]
+                'arg': mention.text[hashtag.get('indices')[1] + 2:]
             }
             robot.actions.append(action)
         robot.clean_up_actions()

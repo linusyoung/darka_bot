@@ -11,7 +11,7 @@ def main():
 
     last_seen_id = wks.get_last_seen_id()
     api = tc.api
-
+    last_seen_id = '1116286068179922940'
     mentions = api.mentions_timeline(since_id=last_seen_id)
 
     for mention in reversed(mentions):
@@ -21,12 +21,12 @@ def main():
             action_responses = []
             invalid_cmds = []
             response_text = ""
-            bot = wks.log_mention(mention)
+            bot = wks.log_mention(mention, api)
             if row_id > 1:
                 for action in bot.actions:
                     if action.get('cmd').lower() in bot.VALID_CMDS:
                         action_responses.append(
-                            bot.take_action(action, wks, user))
+                            bot.take_action(action, wks, api, user))
                     else:
                         invalid_cmds.append(action.get('cmd'))
                 response_text = ".".join(action_responses)
@@ -45,7 +45,7 @@ def main():
                         if action.get('cmd').lower() == 'signup':
                             new_user = True
                         action_responses.append(
-                            bot.take_action(action, wks, user))
+                            bot.take_action(action, wks, api, user))
                     else:
                         invalid_cmds.append(action.get('cmd'))
                 if not new_user:
