@@ -9,8 +9,8 @@ class GSheet():
 
     LAST_SEEN_RANGE = 'history!A2'
     TWEETS_LOG_RANGE = 'logs!A1:B1'
-    CHECK_USER_RANGE = 'history!C1'
-    USER_NAME_RANGE = 'history!B:B'
+    CHECK_USER_RANGE = 'users!B1'
+    USER_NAME_RANGE = 'users!A1:A'
 
     def __init__(self):
         scope = ['https://www.googleapis.com/auth/spreadsheets',
@@ -86,5 +86,22 @@ class GSheet():
             response = request.execute()
             matches = response.get('updatedData').get('values')[0][0]
             return int(matches) if matches != '#N/A' else 1
+        except errors.Error as err:
+            print(err)
+
+    def signup_user(self, screen_name):
+        value_input_option = 'RAW'
+        insert_data_option = 'OVERWRITE'
+        value_range_body = {
+            "range": self.USER_NAME_RANGE,
+            "majorDimension": "COLUMNS",
+            "values": [[screen_name]]
+        }
+        request = self.sheet.values().append(
+            spreadsheetId=Keys.SPREADSHEET_ID, range=self.USER_NAME_RANGE,
+            valueInputOption=value_input_option, insertDataOption=insert_data_option,
+            body=value_range_body)
+        try:
+            request.execute()
         except errors.Error as err:
             print(err)
