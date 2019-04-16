@@ -34,9 +34,9 @@ class GSheet():
         robot = Robot(api)
         # TODO: remove test mention objects
         # mention_text: @darka_bot #follow HenjiYang
-        tags = [{'text': 'follow', 'indices': [11, 17]}]
+        tags = [{'text': 'signout', 'indices': [11, 18]}]
 
-        mention.text = "@darka_bot #follow HenjiYang"
+        mention.text = "@darka_bot #signout HenjiYang"
         # hashtags = mention.entities.get('hashtags')
         for hashtag in tags:
             # for hashtag in hashtags:
@@ -111,3 +111,24 @@ class GSheet():
             request.execute()
         except errors.Error as err:
             print(err)
+
+    def signout_user(self, row_id):
+
+        batch_request_body = {
+            "requests": [
+                {
+                    "deleteDimension": {
+                        "range": {
+                            "sheetId": Keys.USER_SHEET_ID,
+                            "dimension": "ROWS",
+                            "startIndex": row_id - 1,
+                            "endIndex": row_id
+                        }
+                    }
+                }
+            ]
+        }
+
+        request = self.sheet.batchUpdate(spreadsheetId=Keys.SPREADSHEET_ID,
+                                         body=batch_request_body)
+        request.execute()

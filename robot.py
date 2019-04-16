@@ -33,8 +33,10 @@ class Robot():
             res_text = self.signup(gsheet, user)
         elif cmd == "follow":
             res_text = self.follow(api, action)
+        elif cmd == "signout":
+            res_text = self.signout(gsheet, user)
         else:
-            pass
+            res_text = "unknown action"
             # gsheet.signup_user(user.screen_name)
         return res_text
 
@@ -48,6 +50,14 @@ class Robot():
         else:
             gsheet.signup_user(user.screen_name)
             return "you're all set."
+
+    def signout(self, gsheet, user):
+        row_id = gsheet.user_exists(user.screen_name)
+        if row_id > 1:
+            gsheet.signout_user(row_id)
+            return "sad to say good bye."
+        else:
+            return "please sign up first."
 
     def follow(self, api, action):
         to_follow = action.get('arg')
