@@ -34,9 +34,9 @@ class GSheet():
         robot = Robot(api)
         # TODO: remove test mention objects
         # mention_text: @darka_bot #follow HenjiYang
-        tags = [{'text': 'signout', 'indices': [11, 18]}]
+        tags = [{'text': 'help', 'indices': [11, 15]}]
 
-        mention.text = "@darka_bot #signout HenjiYang"
+        mention.text = "@darka_bot #help sdf"
         # hashtags = mention.entities.get('hashtags')
         for hashtag in tags:
             # for hashtag in hashtags:
