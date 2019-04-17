@@ -32,19 +32,13 @@ class GSheet():
 
     def log_mention(self, mention, api):
         robot = Robot(api)
-        # TODO: remove test mention objects
-        # mention_text: @darka_bot #follow HenjiYang
-        tags = [{'text': 'help', 'indices': [11, 15]}]
-
-        mention.text = "@darka_bot #help sdf"
-        # hashtags = mention.entities.get('hashtags')
-        for hashtag in tags:
-            # for hashtag in hashtags:
+        hashtags = mention.entities.get('hashtags')
+        for hashtag in hashtags:
             action = {
                 'cmd': hashtag.get('text'),
-                'arg': mention.text[hashtag.get('indices')[1] + 2:]
+                'arg': mention.text[hashtag.get('indices')[1] + 1:]
             }
-            robot.actions.append(action)
+        robot.actions.append(action)
         robot.clean_up_actions()
         value_input_option = 'RAW'
         insert_data_option = 'OVERWRITE'

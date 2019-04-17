@@ -1,9 +1,6 @@
 from client_twitter import TwitterClient
 from gsheet_data import GSheet
 
-# 1116273666042421100 two invalids
-# 1116277895138177021 1 valid 1 fail
-
 
 def main():
     wks = GSheet()
@@ -11,7 +8,8 @@ def main():
 
     last_seen_id = wks.get_last_seen_id()
     api = tc.api
-    last_seen_id = '1116286068179922940'
+    # TODO: remove after testing
+    last_seen_id = '1118451624765116415'
     mentions = api.mentions_timeline(since_id=last_seen_id)
 
     for mention in reversed(mentions):
@@ -35,9 +33,8 @@ def main():
                     response_text += \
                         '#{0} not invalid cmd(s).#help to see all valid cmds.' \
                         .format(invalid_cmd_str)
-
-                # api.update_status("@{0} {1}".format(
-                #     user.screen_name, response_text), mention.id)
+                api.update_status("@{0} {1}".format(
+                    user.screen_name, response_text), mention.id)
             else:
                 new_user = False
                 for action in bot.actions:
@@ -52,8 +49,9 @@ def main():
                     wks.skip_users.append(user.screen_name)
                 else:
                     response_text = ".".join(action_responses)
-        print("@{0} {1}".format(
-            user.screen_name, response_text))
+
+        # print("@{0} {1}".format(
+        #     user.screen_name, response_text))
 
         wks.update_last_seen_id(mention.id_str)
 
