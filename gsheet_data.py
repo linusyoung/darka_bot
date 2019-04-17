@@ -1,7 +1,7 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient import errors
-from api_key import Keys
+from configs import Configures
 from robot import Robot
 
 
@@ -22,7 +22,7 @@ class GSheet():
         self.skip_users = []
 
     def get_last_seen_id(self):
-        request = self.sheet.values().get(spreadsheetId=Keys.SPREADSHEET_ID,
+        request = self.sheet.values().get(spreadsheetId=Configures.SPREADSHEET_ID,
                                           range=self.LAST_SEEN_RANGE)
         try:
             response = request.execute()
@@ -48,7 +48,7 @@ class GSheet():
             "values": [[mention.user.screen_name, mention.text.replace(robot.robot_name, '')]]
         }
         request = self.sheet.values().append(
-            spreadsheetId=Keys.SPREADSHEET_ID, range=self.TWEETS_LOG_RANGE,
+            spreadsheetId=Configures.SPREADSHEET_ID, range=self.TWEETS_LOG_RANGE,
             valueInputOption=value_input_option, insertDataOption=insert_data_option,
             body=value_range_body)
         try:
@@ -64,7 +64,7 @@ class GSheet():
             "values": [[id]]
         }
         request = self.sheet.values().update(
-            spreadsheetId=Keys.SPREADSHEET_ID, range=self.LAST_SEEN_RANGE,
+            spreadsheetId=Configures.SPREADSHEET_ID, range=self.LAST_SEEN_RANGE,
             valueInputOption=value_input_option, body=value_range_body)
         try:
             request.execute()
@@ -79,7 +79,7 @@ class GSheet():
                         .format(screen_name=screen_name, name_range=self.USER_NAME_RANGE)]]
         }
         request = self.sheet.values().update(
-            spreadsheetId=Keys.SPREADSHEET_ID, range=self.CHECK_USER_RANGE,
+            spreadsheetId=Configures.SPREADSHEET_ID, range=self.CHECK_USER_RANGE,
             valueInputOption=value_input_option, includeValuesInResponse=True,
             body=value_range_body)
         try:
@@ -98,7 +98,7 @@ class GSheet():
             "values": [[screen_name]]
         }
         request = self.sheet.values().append(
-            spreadsheetId=Keys.SPREADSHEET_ID, range=self.USER_NAME_RANGE,
+            spreadsheetId=Configures.SPREADSHEET_ID, range=self.USER_NAME_RANGE,
             valueInputOption=value_input_option, insertDataOption=insert_data_option,
             body=value_range_body)
         try:
@@ -113,7 +113,7 @@ class GSheet():
                 {
                     "deleteDimension": {
                         "range": {
-                            "sheetId": Keys.USER_SHEET_ID,
+                            "sheetId": Configures.USER_SHEET_ID,
                             "dimension": "ROWS",
                             "startIndex": row_id - 1,
                             "endIndex": row_id
@@ -123,6 +123,6 @@ class GSheet():
             ]
         }
 
-        request = self.sheet.batchUpdate(spreadsheetId=Keys.SPREADSHEET_ID,
+        request = self.sheet.batchUpdate(spreadsheetId=Configures.SPREADSHEET_ID,
                                          body=batch_request_body)
         request.execute()
