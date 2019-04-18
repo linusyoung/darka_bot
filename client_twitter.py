@@ -1,10 +1,11 @@
 import tweepy
-from api_key import Keys
+from configs import Configures
 
 
 class TwitterClient():
 
     def __init__(self):
-        auth = tweepy.OAuthHandler(Keys.CONSUMER_KEY, Keys.CONSUMER_SECRET)
-        auth.set_access_token(Keys.ACCESS_KEY, Keys.ACCESS_SECRET)
+        auth = tweepy.OAuthHandler(
+            Configures.CONSUMER_KEY, Configures.CONSUMER_SECRET)
+        auth.set_access_token(Configures.ACCESS_KEY, Configures.ACCESS_SECRET)
         self.api = tweepy.API(auth)
