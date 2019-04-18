@@ -37,7 +37,7 @@ please tweet `@darka_bot #help signup`
 
     e.g. \#mention BBCWorld Thanks for the news.
 
-## Build your own
+## Build your own:
 1. Required setup
     
     - a twitter developer account
@@ -70,16 +70,16 @@ However, sheet names have to be the following:
 
     Records begin from second row. So you can give header row any title.
 
-    Column A is which user @ the robot
+    Column **A** is which user @ the robot
     
-    Column B is text message in that status
+    Column **B** is text message in that status
 
     3.2 history
 
-    A2 is last processed twitter time line id. So Robot won't process the same message twice.
+    **A2** is last processed twitter time line id. So Robot won't process the same message twice.
 
-    A1 is free to be named.
+    **A1** is free to be named.
 
     3.3 users
 
-    Column A is used to record signup users. Records starts from second row.
+    Column **A** is used to record signup users. Records starts from second row.
