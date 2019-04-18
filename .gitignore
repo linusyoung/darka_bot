@@ -102,6 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-api_key.py
+configs.py
 .vscode
 client_secret.json
