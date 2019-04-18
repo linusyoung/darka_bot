@@ -33,8 +33,8 @@ def main():
                     response_text += \
                         '#{0} not invalid cmd(s).#help to see all valid cmds.' \
                         .format(invalid_cmd_str)
-                api.update_status("@{0} {1}".format(
-                    user.screen_name, response_text), mention.id)
+                # api.update_status("@{0} {1}".format(
+                #     user.screen_name, response_text), mention.id)
             else:
                 new_user = False
                 for action in bot.actions:
@@ -49,9 +49,6 @@ def main():
                     wks.skip_users.append(user.screen_name)
                 else:
                     response_text = ".".join(action_responses)
-
-        # print("@{0} {1}".format(
-        #     user.screen_name, response_text))
 
         wks.update_last_seen_id(mention.id_str)
 
