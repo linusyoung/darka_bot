@@ -1,4 +1,5 @@
 import copy
+import tweepy
 
 
 class Robot():
@@ -78,17 +79,28 @@ class Robot():
             return "please sign up first."
 
     def follow(self, api, action):
-        # TODO: check if user exists
         to_follow = action.get('arg')
-        api.create_friendship(to_follow)
-        return "follow {}".format(to_follow)
+        if self.user_exists(api, to_follow) > 0:
+            api.create_friendship(to_follow)
+            return "follow {}".format(to_follow)
+        else:
+            return "can't follow {}".format(to_follow)
 
     def mention(self, api, action):
-        # TODO: check if user exists
         mention_arg = action.get('arg')
         first_space_index = mention_arg.find(' ')
         mention_user = mention_arg[:first_space_index]
         mention_text = mention_arg[first_space_index + 1:]
         status_text = "@{0} {1}".format(mention_user, mention_text)
-        api.update_status(status_text)
-        return "mention {0}".format(mention_user)
+        if self.user_exists(api, mention_user) > 0:
+            api.update_status(status_text)
+            return "mention {}".format(mention_user)
+        else:
+            return "can't mention {}".format(mention_user)
+
+    def user_exists(self, api, screen_name):
+        try:
+            user = api.get_user(screen_name)
+            return user.id
+        except tweepy.TweepError:
+            return 0
