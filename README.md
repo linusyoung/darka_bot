@@ -46,8 +46,8 @@ please tweet `@darka_bot #help signup`
 
 2. Configuration
 
-    - create a file `configs.py` file at root directory
-    - create a `Configures` class in `configs.py`
+    - create a file `robot_configs.py` file at root directory
+    - create a `Configures` class in `robot_configs.py`
     ```python
     class Configures():
         CONSUMER_KEY = 'YOUR TWITTER CONSUMER KEY'

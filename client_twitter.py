@@ -1,5 +1,5 @@
 import tweepy
-from configs import Configures
+from robot_configs import Configures
 
 
 class TwitterClient():

@@ -1,7 +1,7 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient import errors
-from configs import Configures
+from robot_configs import Configures
 from robot import Robot
 
 
