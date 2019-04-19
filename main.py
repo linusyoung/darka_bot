@@ -8,8 +8,6 @@ def main():
 
     last_seen_id = wks.get_last_seen_id()
     api = tc.api
-    # TODO: remove after testing
-    last_seen_id = '1118451624765116415'
     mentions = api.mentions_timeline(since_id=last_seen_id)
 
     for mention in reversed(mentions):
@@ -33,8 +31,8 @@ def main():
                     response_text += \
                         '#{0} not invalid cmd(s).#help to see all valid cmds.' \
                         .format(invalid_cmd_str)
-                # api.update_status("@{0} {1}".format(
-                #     user.screen_name, response_text), mention.id)
+                api.update_status("@{0} {1}".format(
+                    user.screen_name, response_text), mention.id)
             else:
                 new_user = False
                 for action in bot.actions:
